@@ -6,6 +6,7 @@
  * The UnitManager of the Game
  *
  * Manages actual Unit creation & deletion
+ * 用于区分不同阵营的怪物
  *
  */
 public class UnitManager : MonoBehaviour
