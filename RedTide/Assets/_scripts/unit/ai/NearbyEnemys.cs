@@ -13,10 +13,10 @@ namespace _scripts.unit.ai
         private void Start()
         {
             _enemys = new HashSet<GameUnit>();
-            var child = transform.GetChild(0);
-            if (child)
+            var parent = transform.parent;
+            if (parent)
             {
-                _selfUnit = child.GetComponent<GameUnit>();
+                _selfUnit = parent.GetComponent<GameUnit>();
                 if (_selfUnit)
                 {
                     var bases = GameObject.FindGameObjectsWithTag("Base");

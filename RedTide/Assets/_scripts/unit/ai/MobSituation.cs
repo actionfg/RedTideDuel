@@ -15,7 +15,7 @@ public class MobSituation : BaseAISituation {
     public MobSituation(MobUnit owner) : base(owner)
     {
         _mobControl = owner.GetComponent<MobControl>();
-        _nearbyEnemys = owner.transform.parent.GetComponent<NearbyEnemys>();
+        _nearbyEnemys = owner.GetComponentInChildren<NearbyEnemys>();
     }
 
     protected override bool shouldUpdate(float acc)
@@ -63,7 +63,7 @@ public class MobSituation : BaseAISituation {
 
         if (_nearbyEnemys)
         {
-            return _nearbyEnemys.GetNearestEnemy();    // TODO 选择最近地方阵营单位 
+            return _nearbyEnemys.GetNearestEnemy();    // 选择最近地方阵营单位 
         }
 
         return null;
@@ -106,7 +106,11 @@ public class MobSituation : BaseAISituation {
 
     protected virtual GameUnit SelectHigherPriorityTarget(GameUnit target)
     {
-        // TODO 后期可以更改目标为玩家宠物, 或者多个玩家中的另一个
+        // TODO 后期可根据相关AI策略修改, 如斩杀HP最少的敌人
+        if (_nearbyEnemys)
+        {
+            return _nearbyEnemys.GetNearestEnemy();   
+        }
         return target;
     }
 

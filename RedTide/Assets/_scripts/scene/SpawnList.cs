@@ -93,26 +93,28 @@ public class SpawnList : ScriptableObject {
     public static GameObject DoSpawn(MobConfig mobConfig, Vector3 targetLoc, Quaternion rot, bool hardMode = false, int playerId = -1)
     {
         
-        GameObject parent = new GameObject("UnitParent " + GameContext.unitId);
-        var sphereCollider = parent.AddComponent<SphereCollider>();
-        sphereCollider.radius = UnitManager.ACTIVE_RANGE;
-        sphereCollider.isTrigger = true;
-        parent.transform.position = targetLoc;
-        parent.transform.rotation = rot;
-        parent.transform.SetParent(UnitManager.Instance.transform, true);
-        // TODO 加入对周边地方单位的收集
-        parent.AddComponent<NearbyEnemys>();
-
         GameObject mob = mobConfig.Create();
-        mob.transform.SetParent(parent.transform);
-        mob.transform.localPosition = Vector3.zero;
-        mob.transform.localRotation = Quaternion.identity;
+        mob.transform.position = targetLoc;
+        mob.transform.rotation = rot;
+        mob.transform.SetParent(UnitManager.Instance.transform, true);
         mob.name += GameContext.unitId;
         Interlocked.Increment(ref GameContext.unitId);
         MobUnit mobUnit = mob.AddComponent<MobUnit>();
         mobUnit.Init(mobConfig, GameContext.mobLevel);
         mobUnit.PlayerId = playerId;
-                
+
+        var childObj = new GameObject("NearbyEnemy");
+        var sphereCollider = childObj.AddComponent<SphereCollider>();
+        // TODO 实装警戒距离
+        sphereCollider.radius = UnitManager.ACTIVE_RANGE;
+        sphereCollider.isTrigger = true;
+        childObj.transform.SetParent(mob.transform);
+        childObj.transform.localPosition = Vector3.zero;
+        childObj.transform.localRotation = Quaternion.identity;
+        // 加入对周边地方单位的收集
+        childObj.AddComponent<NearbyEnemys>();
+
+
 //        GameObject mobHpPanel = Instantiate(GameContext.UnitManager.MobHpPanel);
 //        mobHpPanel.transform.SetParent(mob.transform);
 //        MobHpControl mobHpControl = mobHpPanel.GetComponent<MobHpControl>();
@@ -132,7 +134,7 @@ public class SpawnList : ScriptableObject {
 //            mobNameControl.TargetTransform = hpPanelBinder.transform;
 //        }
         
-        return parent;
+        return mob;
     }
 
     public static GameObject DoSpawn(MobConfig mobConfig, Transform spawnTransform, bool hardMode = false, int playerId = -1)

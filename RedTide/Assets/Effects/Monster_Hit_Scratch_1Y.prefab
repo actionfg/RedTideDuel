@@ -237,7 +237,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -1402076449
+  randomSeed: 627469938
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3426,7 +3426,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1781363086
+  randomSeed: 2061017311
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -6579,7 +6579,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 33331534
+  randomSeed: 2000966048
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -9762,7 +9762,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1550234580
+  randomSeed: 126208382
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -12957,7 +12957,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 77499610
+  randomSeed: -1722322238
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -16129,9 +16129,9 @@ ParticleSystemRenderer:
   m_ReceiveShadows: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
+  m_ReflectionProbeUsage: 3
   m_Materials:
-  - {fileID: 2100000, guid: f4bc134af57ec6c44819ccaff02f52ad, type: 2}
+  - {fileID: 2100000, guid: f59420097e7d1eb479a68531d24dc802, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -16183,7 +16183,7 @@ ParticleSystemRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 771aaa05dfc7920408309f55bd4b7223, type: 2}
+  - {fileID: 2100000, guid: 473f5ae9a55a2b04783bdd8dcd987b5f, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -16233,9 +16233,9 @@ ParticleSystemRenderer:
   m_ReceiveShadows: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
+  m_ReflectionProbeUsage: 3
   m_Materials:
-  - {fileID: 2100000, guid: ec51eb069aeb9aa4783c1dc88b4c9b92, type: 2}
+  - {fileID: 2100000, guid: 34005bba0124c464a81034c3fcd1eca0, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -16287,7 +16287,7 @@ ParticleSystemRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: ceffc34b66644f645975df147a0dfeeb, type: 2}
+  - {fileID: 2100000, guid: 8677b4aa24801104bbaf04167b1d861a, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -16339,7 +16339,7 @@ ParticleSystemRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 2100000, guid: af8e9f497ec86d842b45d70de5f350e8, type: 2}
+  - {fileID: 2100000, guid: 4ba75ae057bc8b94eae2aa4e6c4c0e92, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0

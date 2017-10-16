@@ -70,12 +70,12 @@ public class MobUnit : GameUnit {
             {
                 if (FilterOnBroken() && Config.FractureObject != null)
                 {
-                    Destroy(transform.parent.gameObject);
+                    Destroy(gameObject);
                     Instantiate(Config.FractureObject, transform.position, transform.rotation);
                 }
                 else if (Config.RagModel != null)
                 {   // 启用ragdoll
-                    Destroy(transform.parent.gameObject);
+                    Destroy(gameObject);
                     var ragdollObj = Instantiate(Config.RagModel, transform.position, transform.rotation, RagdollRoot.Root.transform);
                     ragdollObj.AddComponent<RagdollParentMarker>();
                     {
@@ -105,12 +105,12 @@ public class MobUnit : GameUnit {
         // 注意预留绑定特效的存续时间
         yield return new WaitForSeconds(delay);
 
-        Destroy(transform.parent.gameObject);
+        Destroy(gameObject);
     }
 
     public override bool isEnemy(GameUnit otherUnit)
     {
-        if (otherUnit.GetType() == typeof(MobUnit) && ((MobUnit) otherUnit).Config.MobGroup == this.Config.MobGroup)
+        if (otherUnit.GetType() == typeof(MobUnit) && ((MobUnit) otherUnit).PlayerId == this.PlayerId)
         {
             return false;
         }
@@ -120,7 +120,7 @@ public class MobUnit : GameUnit {
     IEnumerator DeferedDeath(float delay)
     {
         yield return new WaitForSeconds(delay);
-        Destroy(transform.parent.gameObject);
+        Destroy(gameObject);
     }
 
     protected override void OnHit(GameUnit srcUnit, float actualDamage, int hitEndureLevel)
