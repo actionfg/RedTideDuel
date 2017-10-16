@@ -28,7 +28,7 @@ public class PatrolRouteProvider : IMovingTargetProvider
                 var candidateLoc = Center + dir * length;
                 _latestTarget = AstarPathUtil.GetValidPos(candidateLoc);
             }
-            else if (PatrolRoute.Count > 1)
+            else if (PatrolRoute.Count > 0)
             {
                 _patrolIndex += 1;
                 _patrolIndex = _patrolIndex % PatrolRoute.Count;

@@ -25,6 +25,7 @@ public abstract class GameUnit : MonoBehaviour
     public float Radius { get; private set; }
 
     public bool Dead { get; protected set; }
+    public int PlayerId { get; set; }
 
     public float CurrentHp {
         get { return _currentHp; }

@@ -296,6 +296,7 @@ public class MobControl : MonoBehaviour, IColliderListener, IMovingListener
                 {
                     trigger.GetComponent<Collider>().enabled = true;
                 }
+                Debug.Log(name + " EnableContact");
                 _latestTriggerType = type;
             }
         }
@@ -409,6 +410,7 @@ public class MobControl : MonoBehaviour, IColliderListener, IMovingListener
             HashSet<GameObject> victimList = stage.hitSet;
             if (!victimList.Contains(victim.gameObject))
             {
+                Debug.Log(name + " hit: " + victim.name);
                 if (_currentSkill != null)
                 {
                     _currentSkill.OnTriggerSkill(_mobUnit, victim.gameObject, contactPoint, attackTriggerType, stage.stageId);

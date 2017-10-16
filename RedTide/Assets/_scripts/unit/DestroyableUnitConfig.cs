@@ -18,7 +18,8 @@ public class DestroyableUnitConfig : CharacterConfig
     public override GameObject Create()
     {
         var gameObject = base.Create();
-        gameObject.AddComponent<DestroyableUnit>();
+        var destroyableUnit = gameObject.AddComponent<DestroyableUnit>();
+        destroyableUnit.Init(this);
         return gameObject;
     }
 }

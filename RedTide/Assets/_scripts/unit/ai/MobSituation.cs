@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using _scripts.unit.ai;
 
 // 选择AI攻击目标
 public class MobSituation : BaseAISituation {
@@ -9,10 +10,12 @@ public class MobSituation : BaseAISituation {
 
     protected GameUnit _target;
     private MobControl _mobControl;
+    private NearbyEnemys _nearbyEnemys;
 
     public MobSituation(MobUnit owner) : base(owner)
     {
         _mobControl = owner.GetComponent<MobControl>();
+        _nearbyEnemys = owner.transform.parent.GetComponent<NearbyEnemys>();
     }
 
     protected override bool shouldUpdate(float acc)
@@ -52,18 +55,16 @@ public class MobSituation : BaseAISituation {
         if (GetOwner() is MobUnit)
         {
             var mobOwner = (MobUnit)GetOwner();
-            if (mobOwner.GetRouser() != null && mobOwner.GetRouser().CurrentHp > 0)
+            if (mobOwner.GetRouser() != null && mobOwner.GetRouser().PlayerId != mobOwner.PlayerId && mobOwner.GetRouser().CurrentHp > 0)
             {
                 return mobOwner.GetRouser();
             }
         }
 
-//        var unitManager = GameContext.UnitManager;
-//        if (unitManager)
-//        {
-//            
-//            return unitManager.currentUnit;    // TODO 默认选择当前玩家
-//        }
+        if (_nearbyEnemys)
+        {
+            return _nearbyEnemys.GetNearestEnemy();    // TODO 选择最近地方阵营单位 
+        }
 
         return null;
     }

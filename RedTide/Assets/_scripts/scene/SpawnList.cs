@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Pathfinding;
+using _scripts.unit.ai;
 using Random = System.Random;
 
 [CreateAssetMenu (menuName = "GameConfig/Spawn/SpawnList")]
@@ -75,19 +76,21 @@ public class SpawnList : ScriptableObject {
         }
     }
 
-    public static GameObject DoSpawn(DestroyableUnitConfig unitConfig, Vector3 targetLoc)
+    public static GameObject DoSpawn(DestroyableUnitConfig unitConfig, Vector3 targetLoc, int playerId)
     {
         var gameObject = unitConfig.Create();
         gameObject.transform.position = targetLoc;
+        var destroyableUnit = gameObject.GetComponent<DestroyableUnit>();
+        destroyableUnit.PlayerId = playerId;
         return gameObject;
     }
 
-    public static GameObject DoSpawn(MobConfig mobConfig, Vector3 targetLoc)
+    public static GameObject DoSpawn(MobConfig mobConfig, Vector3 targetLoc, int playerId)
     {
-        return DoSpawn(mobConfig, targetLoc, Quaternion.identity);
+        return DoSpawn(mobConfig, targetLoc, Quaternion.identity, false, playerId);
     }
     
-    public static GameObject DoSpawn(MobConfig mobConfig, Vector3 targetLoc, Quaternion rot, bool hardMode = false)
+    public static GameObject DoSpawn(MobConfig mobConfig, Vector3 targetLoc, Quaternion rot, bool hardMode = false, int playerId = -1)
     {
         
         GameObject parent = new GameObject("UnitParent " + GameContext.unitId);
@@ -97,6 +100,8 @@ public class SpawnList : ScriptableObject {
         parent.transform.position = targetLoc;
         parent.transform.rotation = rot;
         parent.transform.SetParent(UnitManager.Instance.transform, true);
+        // TODO 加入对周边地方单位的收集
+        parent.AddComponent<NearbyEnemys>();
 
         GameObject mob = mobConfig.Create();
         mob.transform.SetParent(parent.transform);
@@ -106,6 +111,7 @@ public class SpawnList : ScriptableObject {
         Interlocked.Increment(ref GameContext.unitId);
         MobUnit mobUnit = mob.AddComponent<MobUnit>();
         mobUnit.Init(mobConfig, GameContext.mobLevel);
+        mobUnit.PlayerId = playerId;
                 
 //        GameObject mobHpPanel = Instantiate(GameContext.UnitManager.MobHpPanel);
 //        mobHpPanel.transform.SetParent(mob.transform);
@@ -129,9 +135,9 @@ public class SpawnList : ScriptableObject {
         return parent;
     }
 
-    private GameObject DoSpawn(MobConfig mobConfig, Transform spawnTransform, bool hardMode)
+    public static GameObject DoSpawn(MobConfig mobConfig, Transform spawnTransform, bool hardMode = false, int playerId = -1)
     {
-        var parent = DoSpawn(mobConfig, spawnTransform.position, spawnTransform.rotation, hardMode);
+        var parent = DoSpawn(mobConfig, spawnTransform.position, spawnTransform.rotation, hardMode, playerId);
 
         if (parent)
         {

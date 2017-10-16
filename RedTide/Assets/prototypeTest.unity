@@ -149,6 +149,51 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &27023624
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 27023625}
+  - component: {fileID: 27023626}
+  m_Layer: 0
+  m_Name: UpperGroup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &27023625
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 27023624}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -40.1, y: 0, z: 0.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 813391968}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &27023626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 27023624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b37eed669d3417abc7d58a8ae7ba2cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Interval: 1000
+  PlayerId: 0
+  BaseConfig: {fileID: 11400000, guid: 912d377a64cefd5429bfd6b56a017d6a, type: 2}
+  mob1: {fileID: 11400000, guid: 3192ea3399bec614e957b0729ae4a79d, type: 2}
+  Count: 1
 --- !u!1 &32064260
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,7 +286,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 813391968}
-  - component: {fileID: 813391969}
   m_Layer: 0
   m_Name: SpawnManager
   m_TagString: Untagged
@@ -258,22 +302,55 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 27023625}
+  - {fileID: 1572258607}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &813391969
+--- !u!1 &1572258606
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1572258607}
+  - component: {fileID: 1572258608}
+  m_Layer: 0
+  m_Name: BelowGroup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1572258607
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1572258606}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 40.1, y: 0, z: 0.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 813391968}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!114 &1572258608
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 813391967}
+  m_GameObject: {fileID: 1572258606}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b37eed669d3417abc7d58a8ae7ba2cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Interval: 10
+  Interval: 1000
+  PlayerId: 1
+  BaseConfig: {fileID: 11400000, guid: 912d377a64cefd5429bfd6b56a017d6a, type: 2}
   mob1: {fileID: 11400000, guid: 3192ea3399bec614e957b0729ae4a79d, type: 2}
   Count: 1
 --- !u!1 &1727990255
@@ -477,13 +554,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1803990512}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.40806332, y: -0, z: -0, w: 0.9129537}
+  m_LocalPosition: {x: -35.31, y: 10.85, z: -24.69}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 48.166004, y: 0, z: 0}
 --- !u!1 &1890165159
 GameObject:
   m_ObjectHideFlags: 0

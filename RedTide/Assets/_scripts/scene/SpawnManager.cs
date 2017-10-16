@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
+using _scripts.unit;
 
 namespace _scripts.scene
 {
     public class SpawnManager : MonoBehaviour
     {
-        public static SpawnManager Instance;
-
         public float Interval = 0f;
+        public int PlayerId = -1;        // 对战场景, 阵营方可能会变; 为-1则中立
+
+        public DestroyableUnitConfig BaseConfig;
+        
         public MobConfig mob1;
         public int Count = 1;
 
@@ -14,23 +17,14 @@ namespace _scripts.scene
         
         private void Start()
         {
-            DoSingleton();
-
             _acc = Interval;
+
+            if (BaseConfig)
+            {
+                SpawnList.DoSpawn(BaseConfig, transform.position, PlayerId);
+            }
         }
         
-        private void DoSingleton()
-        {
-            if (Instance == null)
-            {
-                Instance = this;
-            }
-            else if (Instance != this.gameObject)
-            {
-                Destroy(this.gameObject);
-            }
-        }
-
         private void Update()
         {
             _acc += Time.deltaTime;
@@ -46,7 +40,7 @@ namespace _scripts.scene
         {
             for (int i = 0; i < Count; i++)
             {
-                SpawnList.DoSpawn(mob1, transform.position);
+                SpawnList.DoSpawn(mob1, transform.position, PlayerId);
             }
         }
     }
