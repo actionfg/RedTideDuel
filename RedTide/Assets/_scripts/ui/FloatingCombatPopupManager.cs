@@ -40,7 +40,6 @@ public class FloatingCombatPopupManager : MonoBehaviour
     public void ProcessFloatingCombatPopup(FloatingCombatPopupType popupType, float value, GameUnit target)
     {
         GameObject floatingPopup = null;
-
         switch (popupType)
         {
             case FloatingCombatPopupType.Damage:

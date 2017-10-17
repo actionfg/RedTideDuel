@@ -18,7 +18,8 @@ public class SimpleStandAIBehavior : AIBehavior {
 
     public bool doBehavior(float tpf)
     {
-        _aiPath.EnableTrace(false);
+        // 暂不清除移动目的地,以免覆盖掉准备阶段的移动指令    
+//        _aiPath.EnableTrace(false);
         return false;
     }
 
