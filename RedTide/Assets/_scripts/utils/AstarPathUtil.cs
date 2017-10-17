@@ -19,4 +19,16 @@ public class AstarPathUtil {
     }
 
 
+    public static bool IsValid(Vector3 pos)
+    {
+        var nnInfo = AstarPath.active.GetNearest(pos);
+        if (nnInfo.node != null)
+        {
+            if (nnInfo.node.Walkable)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

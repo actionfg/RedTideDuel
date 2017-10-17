@@ -1,9 +1,9 @@
 ﻿﻿using System;
 using UnityEngine;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
  using Lib.SimpleJSON;
  using Steamworks;
+ using _scripts;
 
 public class GameContext
 {
@@ -24,8 +24,7 @@ public class GameContext
     public static event  OnResumeDataLoadedDelegate OnResumeDataLoaded;
 
 
-    public static int character = 2;
-    public static int mobLevel = 6;
+    public static int mobLevel = 1;
 
     private static GoldData _GoldData;
 
@@ -41,7 +40,8 @@ public class GameContext
         }
     }
 
-    public static int stage = 0; // 第几章
+    public static int SelfPlayerId = 0;
+    public static GameStage GameStage = GameStage.Prepare; 
     public static int chapter = 0; // 第几节
 
     public static string LocalName = "zh-CN";
@@ -53,11 +53,6 @@ public class GameContext
     public static bool Success = false; // 是否通关
 
     public static int unitId = 0;
-    public static int MessageCount = 0;
-
-    public static float ResumeHp;                 // 上次存档时的生命值
-    public static float ResumeMp;                 // 上次存档时的魔法值
-    public static BasicAttribute ResumeAttribute; // 上次存档数据: 角色属性
 
     public static void SaveGameData()
     {
@@ -68,7 +63,6 @@ public class GameContext
         // 用Json格式保存
         var rootNode = new JSONClass();
         rootNode.Add("GoldData", GoldData.SaveToJSON());
-        rootNode.Add("stage", new JSONData(stage));
         rootNode.Add("chapter", new JSONData(chapter));
 
         if (SteamManager.Initialized)
@@ -220,13 +214,10 @@ public class GameContext
     public static void Reset()
     {
         Debug.Log("Resetting GameData...");
-        stage = 0;
+        GameStage= GameStage.Prepare;
         chapter = 0;
         Success = false;
         unitId = 0;
-        ResumeHp = 0f;
-        ResumeMp = 0f;
-        ResumeAttribute = null;
         _GoldData = new GoldData();
     }
 

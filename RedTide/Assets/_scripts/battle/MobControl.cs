@@ -35,8 +35,6 @@ public class MobControl : MonoBehaviour, IColliderListener, IMovingListener
     private MobAIPath _mobAiPath;
     private Dictionary<SkillConfig, float> _skillCdMap;
     private float _animMoveSpeed;
-    public int ColliderUnits { get; private set; }
-    public Vector3 CollideNormal { get; private set; }
 
     // for debug
     private Vector3 _latestHitPoint;
@@ -513,14 +511,6 @@ public class MobControl : MonoBehaviour, IColliderListener, IMovingListener
 
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        var gameUnit = hit.gameObject.GetComponent<GameUnit>();
-        if (gameObject != hit.gameObject && gameUnit /*&& hit.moveLength < 0.01f*/)
-        {
-//            Debug.Log(Time.time + " self: " + name + " trapped by " + gameUnit.name + " moveLength: " + hit.moveLength);
-            _latestHitPoint = hit.point;
-            CollideNormal += hit.normal;
-            ColliderUnits++;
-        }
         if (CollideEvent != null)
         {
             CollideEvent(hit.gameObject);
@@ -530,8 +520,6 @@ public class MobControl : MonoBehaviour, IColliderListener, IMovingListener
     void FixedUpdate()
     {
         _latestHitPoint = Vector3.zero;
-        ColliderUnits = 0;
-        CollideNormal = Vector3.zero;
     }
 
 //    void OnDrawGizmos()

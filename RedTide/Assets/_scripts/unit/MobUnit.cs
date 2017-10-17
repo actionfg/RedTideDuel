@@ -195,4 +195,17 @@ public class MobUnit : GameUnit {
         navmeshCut.circleRadius = Radius * 2f;
         navmeshCut.updateDistance = 0.6f;
     }
+
+    public void MoveTo(Vector3 pos)
+    {
+        // TODO 整合进AI中
+        _mobAiPath = GetComponent<MobAIPath>();
+        if (_mobAiPath)
+        {
+            _mobAiPath.SetTargetPos(pos);
+            _mobAiPath.endReachedDistance = 0.2f;
+            _mobAiPath.slowdownDistance = 0.5f;
+            _mobAiPath.EnableTrace(true);
+        }
+    }
 }

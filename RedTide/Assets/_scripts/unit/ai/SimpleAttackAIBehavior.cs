@@ -8,7 +8,6 @@ public class SimpleAttackAIBehavior : AIBehavior
     protected readonly MobControl _mobControl;
     protected readonly MobSituation _mobSituation;
     protected readonly MobSkillSituation _skillSituation;
-    protected readonly EyeContactSituation _eyeContactSituation;
     protected MobAIPath _aiPath;
     protected MobUnit _mobUnit;
     private float _dullTime;
@@ -17,15 +16,13 @@ public class SimpleAttackAIBehavior : AIBehavior
 //
 //    public event ActiveSkillHandler activeSkillEvent;
 
-    public SimpleAttackAIBehavior(MobUnit mobUit, MobSituation mobSituation, MobSkillSituation skillSituation,
-        EyeContactSituation eyeContactSituation)
+    public SimpleAttackAIBehavior(MobUnit mobUit, MobSituation mobSituation, MobSkillSituation skillSituation)
     {
         _mobUnit = mobUit;
         _mobControl = mobUit.GetComponent<MobControl>();
         _mobSituation = mobSituation;
         _skillSituation = skillSituation;
 //        activeSkillEvent += skillSituation.ActiveSkill;
-        _eyeContactSituation = eyeContactSituation;
         _aiPath = mobUit.GetComponent<MobAIPath>();
 
         MaxDullDuration = mobUit.DullDuration;
@@ -59,9 +56,7 @@ public class SimpleAttackAIBehavior : AIBehavior
             }
 
             var targetSqrMagnitude = toTarget.sqrMagnitude;
-            // TODO 暂时屏蔽EyeContactSituation, 因偶尔被头盔挡住
-            if (targetSqrMagnitude <= attackRange * attackRange /*&& _eyeContactSituation.getCurrentStatus() ==
-                (int) EyeContactSituation.EyeContactState.Yes*/)
+            if (targetSqrMagnitude <= attackRange * attackRange )
             {
                 _aiPath.MovingTargetProvider = null;
                 toTarget.Normalize();

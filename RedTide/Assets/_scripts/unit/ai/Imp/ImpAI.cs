@@ -9,7 +9,6 @@ public class ImpAI : MobAI
     protected override void Start()
     {
         InitAI();
-        _aiPath = GetComponent<MobAIPath>();
         _mobUnit = GetComponent<MobUnit>();
 
         if (_mobUnit)
@@ -20,16 +19,13 @@ public class ImpAI : MobAI
             var skillSituation = new ImpSkillSituation(_mobUnit, mobSituation);
             AddAISituation(skillSituation);
 
-            var eyeContactSituation = new EyeContactSituation(_mobUnit, mobSituation); // 视线检测
-            AddAISituation(eyeContactSituation);
-
             var stayAwaySituation = new ImpStayAwaySituation(_mobUnit, mobSituation, FleeDistance); // 触发逃跑
             AddAISituation(stayAwaySituation);
 
             AddAIBehavior(new StayAwayAIBehavior(_mobUnit, mobSituation, FleeDistance * 1.5f), 6, 1, new AISituationConfig()
                 .addSituationCondition(stayAwaySituation, (int) ImpStayAwaySituation.EvadeState.Flee));
 
-            var attackAiBehavior = new SimpleAttackAIBehavior(_mobUnit, mobSituation, skillSituation, eyeContactSituation);
+            var attackAiBehavior = new SimpleAttackAIBehavior(_mobUnit, mobSituation, skillSituation);
             AddAIBehavior(attackAiBehavior, 5, 1,new AISituationConfig()
                 .addSituationCondition(mobSituation, (int) MobSituation.MobState.Chasing, (int) MobSituation.MobState.Attack));
 

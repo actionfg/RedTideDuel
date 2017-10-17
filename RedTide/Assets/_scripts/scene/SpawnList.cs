@@ -111,6 +111,7 @@ public class SpawnList : ScriptableObject {
         childObj.transform.SetParent(mob.transform);
         childObj.transform.localPosition = Vector3.zero;
         childObj.transform.localRotation = Quaternion.identity;
+        childObj.layer = LayerMask.NameToLayer("Ignore Raycast");
         // 加入对周边地方单位的收集
         childObj.AddComponent<NearbyEnemys>();
 

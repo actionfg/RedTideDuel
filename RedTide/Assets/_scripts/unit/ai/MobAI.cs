@@ -7,14 +7,12 @@ using Pathfinding;
 public class MobAI : AI
 {
     protected MobUnit _mobUnit;
-    protected MobAIPath _aiPath;
     private SimpleAttackAIBehavior _attackAiBehavior;
 
     protected override void Start()
     {
         base.Start();
 
-        _aiPath = GetComponent<MobAIPath>();
         _mobUnit = GetComponent<MobUnit>();
 
         if (_mobUnit)
@@ -26,14 +24,8 @@ public class MobAI : AI
             var skillSituation = new MobSkillSituation(_mobUnit, mobSituation);        // 攻击技能选择逻辑
             AddAISituation(skillSituation);
 
-            var eyeContactSituation = new EyeContactSituation(_mobUnit, mobSituation);    // 视线检测
-            AddAISituation(eyeContactSituation);
-
             var evadeCollideSituation = new EvadeCollideSituation(_mobUnit, mobSituation);    // 距离保持和逃跑
             AddAISituation(evadeCollideSituation);
-
-            var moveBlockedSituation = new MoveBlockedSituation(_mobUnit, mobSituation);
-            AddAISituation(moveBlockedSituation);
 
             if (_mobUnit.Config.CanFlee)
             {// 逃跑
@@ -47,20 +39,15 @@ public class MobAI : AI
 
             // 攻击逻辑
             {// 杂鱼怪攻击
-                _attackAiBehavior = new SimpleAttackAIBehavior(_mobUnit, mobSituation, skillSituation, eyeContactSituation);
+                _attackAiBehavior = new SimpleAttackAIBehavior(_mobUnit, mobSituation, skillSituation);
                 AddAIBehavior(_attackAiBehavior, 5, 1, new AISituationConfig()
                     .addSituationCondition(mobSituation, (int)MobSituation.MobState.Chasing, (int)MobSituation.MobState.Attack));
 
             }
 
             // 目标隐形后的攻击行为
-            AddAIBehavior(new SearchAttackAIBehavior(_mobUnit, mobSituation, skillSituation), 5, 1,
-                new AISituationConfig().addSituationCondition(mobSituation, (int) MobSituation.MobState.SearchAttack));
-
-
-            // 移动路线被其他怪物堵住
-            AddAIBehavior(new MoveBlockedAIBehavior(_mobUnit, mobSituation), 5, 2, new AISituationConfig()
-                .addSituationCondition(moveBlockedSituation, (int)MoveBlockedSituation.BlockState.PartialBlock));
+//            AddAIBehavior(new SearchAttackAIBehavior(_mobUnit, mobSituation, skillSituation), 5, 1,
+//                new AISituationConfig().addSituationCondition(mobSituation, (int) MobSituation.MobState.SearchAttack));
 
 
             // 强制攻击
@@ -69,8 +56,6 @@ public class MobAI : AI
 
             // 站立不动
             var standAiBehavior = new SimpleStandAIBehavior(_mobUnit);
-            AddAIBehavior(standAiBehavior, 6, 1, new AISituationConfig()
-                .addSituationCondition(moveBlockedSituation, (int)MoveBlockedSituation.BlockState.TotalBlock));
             AddAIBehavior(standAiBehavior, 0, 1, new AISituationConfig()
                 .addSituationCondition(mobSituation, (int)MobSituation.MobState.Stand));
         }

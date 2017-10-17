@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using _scripts;
 using _scripts.unit.ai;
 
 // 选择AI攻击目标
@@ -25,7 +26,8 @@ public class MobSituation : BaseAISituation {
 
     protected override int updateSituation(float tpf)
     {
-        if (GetOwner().CurrentHp <=0 ) return (int) MobState.Stand;
+        if (GetOwner().CurrentHp <= 0 || GameContext.GameStage == GameStage.Prepare) 
+            return (int) MobState.Stand;
 
         if (IsTargetValid(_target))
         {
