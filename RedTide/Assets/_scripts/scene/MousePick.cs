@@ -33,18 +33,29 @@ public class MousePick : MonoBehaviour {
 				}
 			}
 
-			if (Input.GetMouseButtonDown(1) && _selectTarget != null)
-			{// right button
-				RaycastHit rayHit;
-				Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-				if (Physics.Raycast(ray, out rayHit, 200, ~LayerMask.GetMask("Ignore Raycast")))
-				{
-					Vector3 pos = rayHit.point;
-					if (rayHit.collider.tag.Equals("Floor") && AstarPathUtil.IsValid(pos))
-					{
-						_selectTarget.MoveTo(pos);
-					}
-				}
+//			if (Input.GetMouseButtonDown(1) && _selectTarget != null)
+//			{// right button
+//				RaycastHit rayHit;
+//				Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+//				if (Physics.Raycast(ray, out rayHit, 200, ~LayerMask.GetMask("Ignore Raycast")))
+//				{
+//					Vector3 pos = rayHit.point;
+//					if (rayHit.collider.tag.Equals("Floor") && AstarPathUtil.IsValid(pos))
+//					{
+//						_selectTarget.MoveTo(pos);
+//					}
+//				}
+//			}
+			// TODo 改为拖拽模式
+			if (_selectTarget)
+			{
+				var floorHitPosition = EffectUtil.GetFloorHitPosition();
+				_selectTarget.transform.position = floorHitPosition + Vector3.up * 0.5f;
+			}
+
+			if (Input.GetMouseButtonUp(0))
+			{
+				_selectTarget = null;
 			}
 		}
 	}

@@ -19,7 +19,7 @@ public abstract class GameUnit : MonoBehaviour
     protected float _currentHp;
     protected float _currentMp;
 
-    protected Vector3 LastCheckPos;    // 用于记录掉落前的安全位置
+//    protected Vector3 LastCheckPos;    // 用于记录掉落前的安全位置
     protected CharacterController _characterController;
     public float Mass;
     public float Radius { get; private set; }
@@ -203,16 +203,16 @@ public abstract class GameUnit : MonoBehaviour
         else
         {
             // 检测是否掉出屏幕
-            if (_characterController && _characterController.isGrounded)
-            {
-                // 获取掉落后的重置位置
-                LastCheckPos = transform.position;
-            }
-            if (!CheckOnGround())
-            {
-                Debug.Log(gameObject.name + " is in air, yVelocity: " + _characterController.velocity.y);
-                OnFalling();
-            }
+//            if (_characterController && _characterController.isGrounded)
+//            {
+//                // 获取掉落后的重置位置
+//                LastCheckPos = transform.position;
+//            }
+//            if (!CheckOnGround())
+//            {
+//                Debug.Log(gameObject.name + " is in air, yVelocity: " + _characterController.velocity.y);
+//                OnFalling();
+//            }
             _effectProcessor.Update(this);
         }
     }
