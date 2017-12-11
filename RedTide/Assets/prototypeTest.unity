@@ -482,7 +482,7 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 0, y: 0, z: 0}
   m_UseCustomVertexStreams: 1
-  m_VertexStreams: 00010304221f
+  m_VertexStreams: 000104221f
   m_Mesh: {fileID: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
@@ -547,7 +547,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1520944548
+  randomSeed: -1992896936
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3786,6 +3786,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minDist: 30
+  CheckIndex: 0
 --- !u!1 &402872489
 GameObject:
   m_ObjectHideFlags: 0

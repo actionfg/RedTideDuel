@@ -3,14 +3,12 @@ using System.Collections;
 
 public class SimpleAttackAIBehavior : AIBehavior
 {
-    public float MaxDullDuration = 3f;
 
     protected readonly MobControl _mobControl;
     protected readonly MobSituation _mobSituation;
     protected readonly MobSkillSituation _skillSituation;
     protected MobAIPath _aiPath;
     protected MobUnit _mobUnit;
-    private float _dullTime;
 
 //    public delegate void ActiveSkillHandler(SkillConfig skillConfig);
 //
@@ -25,7 +23,6 @@ public class SimpleAttackAIBehavior : AIBehavior
 //        activeSkillEvent += skillSituation.ActiveSkill;
         _aiPath = mobUit.GetComponent<MobAIPath>();
 
-        MaxDullDuration = mobUit.DullDuration;
     }
 
 
@@ -60,7 +57,7 @@ public class SimpleAttackAIBehavior : AIBehavior
             {
                 _aiPath.MovingTargetProvider = null;
                 toTarget.Normalize();
-                if (Time.time >= _dullTime && _mobControl.CanActiveSkill(skillConfig))
+                if (_mobControl.CanActiveSkill(skillConfig))
                 {
                     _mobControl.DoSimpleAttackWithoutCheck(toTarget, skillConfig);
                     _aiPath.EnableTrace(false);
@@ -87,8 +84,6 @@ public class SimpleAttackAIBehavior : AIBehavior
                 }
                 _aiPath.EnableTrace(true);
 
-                // 设置靠近后迟钝时间
-                _dullTime = Time.time + Random.value * MaxDullDuration;
             }
             else
             {

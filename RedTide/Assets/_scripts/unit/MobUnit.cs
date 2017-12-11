@@ -14,7 +14,6 @@ public class MobUnit : GameUnit {
     private MobAIPath _mobAiPath;
 
     public MobConfig Config { get; private set; }
-    public float DullDuration { get; set; }
     public int SpecialWeapon { get; set; }
 
     protected override void Start()
@@ -30,7 +29,6 @@ public class MobUnit : GameUnit {
     {
         this.level = level;
         Mass = config.Mass;
-        DullDuration = config.DullDuration;
         Config = Instantiate(config);
         Init(config.CreateBasicAttributeConfig(this.level));
         _attackPower = config.attackFactor * this.level * 2f;

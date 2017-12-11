@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using GameDuel;
 using _scripts.unit;
 
 [CreateAssetMenu (menuName = "GameConfig/Character/MobConfig")]
@@ -20,8 +21,9 @@ public class MobConfig : CharacterConfig
     [Tooltip("跑步声音")]
     public AudioClip LeftFootSound;
     public AudioClip RightFootSound;
-    public FlyType MobType;
-    public MobGroup MobGroup = MobGroup.Human;
+    public FlyType FlyType;                                      // 是否飞行单位
+    public MobGroup MobGroup = _scripts.unit.MobGroup.Human;     // TODO 后期可能改为三国国家
+    public MobType MobClassType = GameDuel.MobType.ShieldMob;    // 小兵职业
     public MobAttackType AttackType = MobAttackType.Mix;
     public GameObject RagModel;
     [Tooltip("碎尸效果")]
@@ -40,8 +42,6 @@ public class MobConfig : CharacterConfig
     // 由Ragdoll触发, 意味着可被玩家退至特定地点释放
     [Tooltip("死亡技能由Ragdoll触发")]
     public bool DeathSkillBindRd = false;
-    [Tooltip("靠近角色后的发呆时间")]
-    public float DullDuration = 3f;
 
     public BasicAttributeConfig CreateBasicAttributeConfig(int level)
     {
