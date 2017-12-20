@@ -205,6 +205,7 @@ GameObject:
   - component: {fileID: 32064263}
   - component: {fileID: 32064262}
   - component: {fileID: 32064261}
+  - component: {fileID: 32064265}
   m_Layer: 9
   m_Name: Plane
   m_TagString: Floor
@@ -225,7 +226,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: e74f749610b7ebb48a28426271e863c0, type: 2}
+  - {fileID: 2100000, guid: 155b55c215c8d9f4fb63738cb42ab48d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -278,6 +279,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &32064265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 32064260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4faa4fa87c6e4d78816746b40cb0d89f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &143270336
 GameObject:
   m_ObjectHideFlags: 0
@@ -470,7 +482,7 @@ ParticleSystemRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_RenderMode: 0
+  m_RenderMode: 3
   m_SortMode: 0
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5
