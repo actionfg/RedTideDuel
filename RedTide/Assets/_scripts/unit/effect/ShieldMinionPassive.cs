@@ -7,13 +7,14 @@ public class ShieldMinionPassive : Effect
 {
 	public float Ratio = 0.2f;
 	public float ReduceDamage = 10f;
-	
+	public GameObject TriggerEffect;
+
 	public override void DoTrigger(EffectObject effectObject, GameUnit caster, GameObject target, GameUnit targetUnit, int skillEndureLevel,
 		int comboIndex)
 	{
 		if (targetUnit)
 		{
-			targetUnit.AddEffect(new ShieldMinionPassiveConfig(caster, Ratio, ReduceDamage));
+			targetUnit.AddEffect(new ShieldMinionPassiveConfig(caster, Ratio, ReduceDamage, TriggerEffect));
 		}
 	}
 	
@@ -24,11 +25,13 @@ public class ShieldMinionPassiveConfig : EffectConfig, TakingDamageFilter
 {
 	private readonly float _ratio;
 	private readonly float _reduceDamage;
+	private readonly GameObject _triggerEffect;
 
-	public ShieldMinionPassiveConfig(GameUnit caster, float ratio, float reduceDamage) : base(caster)
+	public ShieldMinionPassiveConfig(GameUnit caster, float ratio, float reduceDamage, GameObject triggerEffect) : base(caster)
 	{
 		_ratio = ratio;
 		_reduceDamage = reduceDamage;
+		_triggerEffect = triggerEffect;
 	}
 	
 	public override void OnStart(GameUnit target)
@@ -56,8 +59,13 @@ public class ShieldMinionPassiveConfig : EffectConfig, TakingDamageFilter
 		{
 			if (Random.value < _ratio)
 			{
+				if (_triggerEffect)
+				{
+					GameObject.Instantiate(_triggerEffect, GetCaster().transform.position, Quaternion.identity);
+				}
 				return _reduceDamage;
 			}
+
 		}
 		return 0;
 	}

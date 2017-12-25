@@ -7,6 +7,7 @@ namespace GameDuel
         public float Ratio = 0.15f;
         public float Duration = 5f;
         public float DamagePerSecond = 2f;
+        public GameObject TriggerEffect;
 
         public override void DoTrigger(EffectObject effectObject, GameUnit caster, GameObject target,
             GameUnit targetUnit, int skillEndureLevel,
@@ -14,7 +15,7 @@ namespace GameDuel
         {
             if (targetUnit)
             {
-                targetUnit.AddEffect(new BowMinionPassiveConfig(caster, Ratio, Duration, DamagePerSecond));
+                targetUnit.AddEffect(new BowMinionPassiveConfig(caster, Ratio, Duration, DamagePerSecond, TriggerEffect));
             }
         }
 
@@ -26,12 +27,14 @@ namespace GameDuel
         private readonly float _ratio;
         private readonly float _duration;
         private readonly float _dps;
+        private GameObject _triggerEffect;
 
-        public BowMinionPassiveConfig(GameUnit caster, float ratio, float duration, float dps) : base(caster)
+        public BowMinionPassiveConfig(GameUnit caster, float ratio, float duration, float dps, GameObject triggerEffect) : base(caster)
         {
             _ratio = ratio;
             _duration = duration;
             _dps = dps;
+            _triggerEffect = triggerEffect;
         }
 
         public override void OnStart(GameUnit target)
@@ -53,12 +56,15 @@ namespace GameDuel
         }
 
         public float OnCauseDamage(float damage, GameUnit src, GameUnit victim, DamageType damageType,
-            DamageRange damageRange,
-            DamageAttribute damageAttribute, DamageSource damageSource)
+            DamageRange damageRange, DamageAttribute damageAttribute, DamageSource damageSource)
         {
             if (Random.value < _ratio)
             {
                 victim.AddEffect(new DamageOverTime(src, _duration, _dps));
+                if (_triggerEffect)
+                {
+                    GameObject.Instantiate(_triggerEffect, GetCaster().transform.position, Quaternion.identity);
+                }
             }
             return 0;
         }

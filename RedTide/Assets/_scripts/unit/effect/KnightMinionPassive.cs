@@ -7,6 +7,7 @@ namespace GameDuel
     {
         public float StunDuration = 5f;
         public float Damage = 2f;
+        public GameObject TriggerEffect;
 
         public override void DoTrigger(EffectObject effectObject, GameUnit caster, GameObject target,
             GameUnit targetUnit, int skillEndureLevel,
@@ -14,7 +15,7 @@ namespace GameDuel
         {
             if (targetUnit)
             {
-                targetUnit.AddEffect(new KnightMinionPassiveConfig(caster, StunDuration, Damage));
+                targetUnit.AddEffect(new KnightMinionPassiveConfig(caster, StunDuration, Damage, TriggerEffect));
             }
         }
 
@@ -25,13 +26,15 @@ namespace GameDuel
     {
         private readonly float _stunDuration;
         private readonly float _damage;
+        private readonly GameObject _triggerEffect;
 
         private bool _activated = false;
         
-        public KnightMinionPassiveConfig(GameUnit caster, float stunDuration, float damage) : base(caster)
+        public KnightMinionPassiveConfig(GameUnit caster, float stunDuration, float damage, GameObject triggerEffect) : base(caster)
         {
             _stunDuration = stunDuration;
             _damage = damage;
+            _triggerEffect = triggerEffect;
         }
 
         public override void OnStart(GameUnit target)
@@ -53,12 +56,15 @@ namespace GameDuel
         }
 
         public float OnCauseDamage(float damage, GameUnit src, GameUnit victim, DamageType damageType,
-            DamageRange damageRange,
-            DamageAttribute damageAttribute, DamageSource damageSource)
+            DamageRange damageRange, DamageAttribute damageAttribute, DamageSource damageSource)
         {
             
             victim.AddEffect(new UncontrollableEffectConfig(src, victim, UncontrollableType.Stun, _stunDuration));
             victim.ProcessDamage(GetCaster(), _damage, DamageType.PhysicalDamage, DamageRange.Melee, DamageAttribute.Normal, DamageSource.Trigger, 0);
+            if (_triggerEffect)
+            {
+                GameObject.Instantiate(_triggerEffect, GetCaster().transform.position, Quaternion.identity);
+            }
             _activated = true;
             return 0;
         }
