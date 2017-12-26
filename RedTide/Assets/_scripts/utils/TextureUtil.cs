@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
+using Imaging.DDSReader;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -58,5 +61,48 @@ namespace Game04.Util
             
             return textureArray;
         }
+
+        // 用于将ARGB格式的,Volume类型的DDS贴图转成3dTexture Asset
+        // path = @"Assets/resources/textures/splashes/SDiffuseVolume-ARGB.dds"
+        public static void ConvertDdsVolumeTex2Asset(string path, string assetName)
+        {
+            Stream stream = File.Open(path, FileMode.Open);
+            DDSImage ddsImage = DDS.LoadImageData(stream, true);
+            Texture3D tex = Create(ddsImage);
+
+            if (tex)
+            {
+                Debug.Log("width: " + tex.width + " height: " + tex.height + " ,depth: " + ddsImage.Depth);
+                AssetDatabase.CreateAsset(tex, "Assets/_prefabs/" + assetName + ".asset");
+            }
+        }
+        
+        private static Texture3D Create(DDSImage ddsImage)
+        {
+            var tex = new Texture3D(ddsImage.Width, ddsImage.Height, ddsImage.Depth, TextureFormat.ARGB32, true);
+            var colors = new Color[ddsImage.Width * ddsImage.Height * ddsImage.Depth];
+            Color c = Color.white;
+            int idx = 0;
+            byte[] rawData = ddsImage.ImageData;
+            for (int z = 0; z < ddsImage.Depth; z++)
+            {
+                for(int y =0; y<ddsImage.Height; y++)
+                {
+                    for (int x = 0; x < ddsImage.Width; x++, ++idx)
+                    {
+                        c.r = rawData[idx * 4 + 2];
+                        c.g = rawData[idx * 4 + 1];
+                        c.b = rawData[idx * 4];
+                        c.a = rawData[idx * 4 + 3];
+                        colors[idx] = c;
+                    }
+                }
+            }
+            tex.SetPixels(colors);
+            tex.Apply();
+
+            return tex;
+        }
+
     }
 }
