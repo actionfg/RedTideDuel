@@ -28,8 +28,8 @@ namespace RedTide
             {
                 _timeCycle = 0;
 
-                _material.SetFloat("XDisplace", Random.value * 2f);
-                _material.SetFloat("YDisplace", Random.value * 2f);
+                _material.SetFloat("g_splashXDisplace", Random.value * 2f);
+                _material.SetFloat("g_splashYDisplace", Random.value * 2f);
                 
             }
         }
