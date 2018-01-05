@@ -16,16 +16,16 @@ namespace Game04.Util
 //            AssetDatabase.CreateAsset(tex, "Assets/testTex3D.asset");
 
             //  Unity加载Dxt5 3D图片格式失败, 改由将ARGB格式的,Volume类型的DDS贴图转成3dTexture Asset
-            Stream stream = File.Open(@"Assets/resources/textures/splashes/SDiffuseVolume-ARGB.dds", FileMode.Open);
+            Stream stream = File.Open(@"Assets/resources/textures/splashes/SBumpVolume-ARGB.dds", FileMode.Open);
             DDSImage ddsImage = DDS.LoadImageData(stream, true);
             Texture3D tex = Create(ddsImage);
 
             if (tex)
             {
                 Debug.Log("width: " + tex.width + " height: " + tex.height + " ,depth: " + tex.GetPixels().Length);
-                AssetDatabase.CreateAsset(tex, "Assets/_prefabs/SDiffuseVolume-ARGB.asset");
+                AssetDatabase.CreateAsset(tex, "Assets/_prefabs/SBumpVolume-ARGB2.asset");
             }
-            GetComponent<Renderer>().material.SetTexture("_SplashDiffuseTex", tex);
+//            GetComponent<Renderer>().material.SetTexture("_SplashDiffuseTex", tex);
         }
         
         private Texture3D Create(DDSImage ddsImage)
@@ -46,6 +46,10 @@ namespace Game04.Util
                         c.b = rawData[idx * 4];
                         c.a = rawData[idx * 4 + 3];
                         colors[idx] = c;
+                        if (z < 2)
+                        {
+                            Debug.Log("x: " + x + " ,Y: " + y + " ,Z: " + z + ", Clolor: " + c);
+                        }
                     }
                 }
             }

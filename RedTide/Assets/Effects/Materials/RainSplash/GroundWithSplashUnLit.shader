@@ -45,10 +45,6 @@
 				float3 wNormal : TEXCOORD2;
 				float3 wTangent : TEXCOORD3;
 				
-				float4 worldToTangent0 : TEXCOORD4;
-				float4 worldToTangent1 : TEXCOORD5;
-				float4 worldToTangent2 : TEXCOORD6;  
-
 			};
 
 			sampler2D _MainTex;
@@ -78,13 +74,7 @@
 				o.worldPos = mul (unity_ObjectToWorld, v.vertex).xyz;
 				o.wNormal = mul(unity_ObjectToWorld, v.normal);
 				o.wTangent = mul(unity_ObjectToWorld, v.tangent.xyz);
-				
-				TANGENT_SPACE_ROTATION;
-				float3x3 worldToTangent = mul(rotation, (float3x3)unity_WorldToObject);
-				o.worldToTangent0 = float4(worldToTangent[0], o.wNormal.x);
-				o.worldToTangent1 = float4(worldToTangent[1], o.wNormal.y);
-				o.worldToTangent2 = float4(worldToTangent[2], o.wNormal.z);
-				
+								
 				return o;
 			}
 			
@@ -142,7 +132,8 @@
 				float4 outputColor = float4( dirAirLight.xyz + col.xyz*diffuseDirLight.xyz 
                           + splashDiffuse*specularDirLight ,1); 
 
-				return outputColor;
+//				return outputColor;
+				return tex3D(_SplashBumpTex, float3(IN.worldPos.xz, g_timeCycle)) ;
 			}
 			ENDCG
 		}
