@@ -60,7 +60,7 @@
 			static float3 g_beta = float3(0.04, 0.04, 0.04);
 			static float3 g_lightPos = float3(0,3,0); //the directional light in world space 
 			static float g_Kd = 0.1;
-			static float dirLightIntensity = 1.0;
+			static float dirLightIntensity = 0.3;
 			static float g_specPower = 20;
 
 			
@@ -106,7 +106,7 @@
 				float3 wNorm2 = IN.wNormal + wetSurf * 2 * (BumpMapVal.x * Tan + BumpMapVal.y * binorm);
 				float3 N = normalize(wNorm2);      					  
 				
-				float3 splashDiffuse = wetSurf * tex3D(_SplashDiffuseTex, float3(IN.worldPos.xz, g_timeCycle));
+				float3 splashDiffuse = wetSurf * tex3D(_SplashDiffuseTex, float3(IN.worldPos.xz/2.0, g_timeCycle));
 				col = float4(splashDiffuse, 1.0);
 				// TODO 进行光照计算
 				    //reflection of the scene-----------------------------------------------------------
@@ -132,8 +132,8 @@
 				float4 outputColor = float4( dirAirLight.xyz + col.xyz*diffuseDirLight.xyz 
                           + splashDiffuse*specularDirLight ,1); 
 
-//				return outputColor;
-				return tex3D(_SplashBumpTex, float3(IN.worldPos.xz, g_timeCycle)) ;
+				return outputColor;
+//				return tex3D(_SplashBumpTex, float3(IN.worldPos.xz, g_timeCycle)) ;
 			}
 			ENDCG
 		}
