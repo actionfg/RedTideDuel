@@ -12,21 +12,20 @@ namespace Game04.Util
         
         private void Start()
         {
-//            Texture3D tex = Create();
-//            AssetDatabase.CreateAsset(tex, "Assets/testTex3D.asset");
 
-            //  Unity加载Dxt5 3D图片格式失败, 改由将ARGB格式的,Volume类型的DDS贴图转成3dTexture Asset
-            Stream stream = File.Open(@"Assets/resources/textures/splashes/SBumpVolume-ARGB2.dds", FileMode.Open);
-            DDSImage ddsImage = DDS.LoadImageData(stream, true);
-//            Texture3D tex = Create(ddsImage);
-            Texture2D tex = CreateTexFromTop(ddsImage);
-
-            if (tex)
-            {
-                Debug.Log("width: " + tex.width + " height: " + tex.height);
-//                AssetDatabase.CreateAsset(tex, "Assets/_prefabs/SBumpVolume-ARGB2.asset");
-            }
-            GetComponent<Renderer>().material.SetTexture("_MainTex", tex);
+            TextureUtil.SplitTexture("textures/splashes/SBumpNormal", 256, 256);
+//            //  Unity加载Dxt5 3D图片格式失败, 改由将ARGB格式的,Volume类型的DDS贴图转成3dTexture Asset
+//            Stream stream = File.Open(@"Assets/resources/textures/splashes/SBumpVolume-ARGB2.dds", FileMode.Open);
+//            DDSImage ddsImage = DDS.LoadImageData(stream, true);
+////            Texture3D tex = Create(ddsImage);
+//            Texture2D tex = CreateTexFromTop(ddsImage);
+//
+//            if (tex)
+//            {
+//                Debug.Log("width: " + tex.width + " height: " + tex.height);
+////                AssetDatabase.CreateAsset(tex, "Assets/_prefabs/SBumpVolume-ARGB2.asset");
+//            }
+//            GetComponent<Renderer>().material.SetTexture("_MainTex", tex);
         }
 
         private Texture2D CreateTexFromTop(DDSImage ddsImage)
@@ -46,6 +45,10 @@ namespace Game04.Util
                     c.b = rawData[idx * 4];
                     c.a = rawData[idx * 4 + 3];
                     colors[idx] = c;
+                    if (c.r > 135)
+                    {
+                        Debug.Log("x: " + x + " ,Y: " + y + ", Clolor: " + c);
+                    }
                 }
             }
             texture2D.SetPixels(colors);
@@ -75,7 +78,7 @@ namespace Game04.Util
                         c.r = rawData[idx * 4 + 2];
                         c.g = rawData[idx * 4 + 1];
                         c.b = rawData[idx * 4];
-                        c.a = rawData[idx * 4 + 3];
+                        c.a = 255;
                         colors[idx] = c;
 //                        if (z < 2)
 //                        {
@@ -90,30 +93,5 @@ namespace Game04.Util
             return tex;
         }
         
-        private Texture3D Create()
-        {
-            Texture3D tex = new Texture3D (Size, Size, Size, TextureFormat.ARGB32, true);
-            var cols = new Color[Size*Size*Size];
-            float mul = 1.0f / (Size-1);
-            int idx = 0;
-            Color c = Color.white;
-            for (int z = 0; z < Size; ++z)
-            {
-                for (int y = 0; y < Size; ++y)
-                {
-                    for (int x = 0; x < Size; ++x, ++idx)
-                    {
-                        c.r = x*mul;
-                        c.g = y*mul;
-                        c.b = z*mul;
-                        cols[idx] = c;
-                    }
-                }
-            }
-            tex.SetPixels (cols);
-            tex.Apply ();
-
-            return tex;
-        }
     }
 }

@@ -104,5 +104,43 @@ namespace Game04.Util
             return tex;
         }
 
+        // 用于拆分贴图，如4096 × 256拆成16张256×256
+        public static void SplitTexture(string path, int width, int height)
+        {
+            var originTex = Resources.Load<Texture2D>(path);
+            int xSplit = (int) (originTex.width / width);
+            int ySplit = (int) (originTex.height / height);
+            Debug.Log("origin Tex format: " + originTex.format);
+
+            Color c = Color.white;
+            var originPixels = originTex.GetPixels();
+            for (int i = 0; i < ySplit; i++)
+            {
+                for (int j = 0; j < xSplit; j++)
+                {
+                    var newTex = new Texture2D(width, height, TextureFormat.RGBA32, true);
+                    var colors = new Color[width * height];
+                    int idx = 0;
+                    for (int yLoop = 0; yLoop < height; yLoop++)
+                    {
+                        for (int xLoop = 0; xLoop < width; xLoop++, ++idx)
+                        {
+                            c.r = originPixels[(i * height + yLoop) * originTex.width + j * width + xLoop].r;
+                            c.g = originPixels[(i * height + yLoop) * originTex.width + j * width + xLoop].g;
+                            c.b = originPixels[(i * height + yLoop) * originTex.width + j * width + xLoop].b;
+                            colors[idx] = c;
+                        }
+                    }
+
+                    newTex.SetPixels(colors);
+                    newTex.Apply();
+                    
+                    byte[] bytes = newTex.EncodeToPNG();
+                    File.WriteAllBytes(Application.dataPath + "/../assets/resources/SBump-" + (i * ySplit + j) + ".png", bytes);
+
+                }
+            }
+        }
+
     }
 }
