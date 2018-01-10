@@ -55,7 +55,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SplashBumpTex:
-        m_Texture: {fileID: 11700000, guid: a8802ab689506ef4c9a5bbf1a044b366, type: 2}
+        m_Texture: {fileID: 11700000, guid: 90c8c5b5bbe0c8b41b925269a3a4b2ea, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SplashDiffuseTex:
