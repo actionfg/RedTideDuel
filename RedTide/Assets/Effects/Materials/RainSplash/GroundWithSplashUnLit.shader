@@ -59,8 +59,9 @@
 			static float g_KsDir = 10;
 			static float3 g_beta = float3(0.04, 0.04, 0.04);
 			static float3 g_lightPos = float3(0,3,0); //the directional light in world space 
+			static float3 g_lightDir = float3(0.3, -0.8, -0.6); //the directional light in world space 
 			static float g_Kd = 0.1;
-			static float dirLightIntensity = 0.3;
+			static float dirLightIntensity = 0.1;
 			static float g_specPower = 20;
 
 			
@@ -116,16 +117,17 @@
 				float3 exDir = float3( exp(-g_beta.x*Dvp),  exp(-g_beta.y*Dvp),  exp(-g_beta.z*Dvp)  );
 				float3 reflVect = reflect(V, N);
 				
+				// PointLight
+				//float3 lightDir = g_lightPos - IN.worldPos;
 				//directional light-----------------------------------------------------------------
-				float3 lightDir = g_lightPos - IN.worldPos;
-				float3 lightDirNorm = normalize(lightDir);
+				float3 lightDirNorm = normalize(g_lightDir);
 				float3 SDir = normalize( g_lightPos - _WorldSpaceCameraPos);
 				float cosGammaDir = dot(SDir, V);
 				float dirLighting = g_Kd*dirLightIntensity*saturate( dot( N,lightDirNorm ) );
 				//diffuse
 				float3 diffuseDirLight = dirLighting*exDir;        
 				//airlight
-				float3 dirAirLight = phaseFunctionSchlick(cosGammaDir)* dirLightIntensity*float3(1-exDir.x,1-exDir.y,1-exDir.z);
+				float3 dirAirLight = phaseFunctionSchlick(cosGammaDir)* dirLightIntensity*float3(1-exDir.x,1-exDir.y,1-exDir.z) * 0.1;
 				//specular
 				float3 specularDirLight = saturate( pow(  dot(lightDirNorm,reflVect),g_specPower)) * dirLightIntensity * g_KsDir * exDir; 
 				

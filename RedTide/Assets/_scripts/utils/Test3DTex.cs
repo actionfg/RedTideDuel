@@ -13,7 +13,7 @@ namespace Game04.Util
         private void Start()
         {
 
-            TextureUtil.SplitTexture("textures/splashes/SBumpNormal", 256, 256);
+
 //            //  Unity加载Dxt5 3D图片格式失败, 改由将ARGB格式的,Volume类型的DDS贴图转成3dTexture Asset
 //            Stream stream = File.Open(@"Assets/resources/textures/splashes/SBumpVolume-ARGB2.dds", FileMode.Open);
 //            DDSImage ddsImage = DDS.LoadImageData(stream, true);
