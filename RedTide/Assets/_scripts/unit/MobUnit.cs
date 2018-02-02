@@ -192,6 +192,7 @@ public class MobUnit : GameUnit {
         navmeshCut.type = NavmeshCut.MeshType.Circle;
         navmeshCut.circleRadius = Radius * 2f;
         navmeshCut.updateDistance = 0.6f;
+        navmeshCut.circleResolution = 5;
     }
 
     public void MoveTo(Vector3 pos)
