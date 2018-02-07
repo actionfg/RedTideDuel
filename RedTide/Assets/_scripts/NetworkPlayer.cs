@@ -17,6 +17,8 @@ namespace GameDuel
         public string playerName;
         [SyncVar(hook = "OnLifeChanged")]
         public int lifeCount;
+        [SyncVar(hook = "OnReadyForBattle")]
+        public bool ReadyForBattle = false;
 
         protected Text _scoreText;
 
@@ -52,6 +54,7 @@ namespace GameDuel
             _scoreText.font = NetworkGameManager.sInstance.uiScoreFont;
             _scoreText.resizeTextForBestFit = true;
             _scoreText.color = color;
+            _scoreText.raycastTarget = false;
             _wasInit = true;
 
             UpdateScoreLifeText();
@@ -86,6 +89,7 @@ namespace GameDuel
             
         }
 
+        ///===== callback from sync var
         // --- Score & Life management & display
         void OnScoreChanged(int newValue)
         {
@@ -99,6 +103,11 @@ namespace GameDuel
             UpdateScoreLifeText();
         }
 
+        void OnReadyForBattle(bool ready)
+        {
+            ReadyForBattle = ready;
+        }
+        
         void UpdateScoreLifeText()
         {
             if (_scoreText != null)
@@ -186,6 +195,13 @@ namespace GameDuel
         {
             EnablePlayer(true);
 
+        }
+
+        [Command]
+        public void CmdChangeBattleReady()
+        {
+            ReadyForBattle = !ReadyForBattle;
+            Debug.Log(playerName + " change battleReady: " + ReadyForBattle);
         }
     }
 }

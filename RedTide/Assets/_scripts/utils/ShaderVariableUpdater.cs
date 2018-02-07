@@ -1,6 +1,4 @@
 ﻿using System.IO;
-using Imaging.DDSReader;
-using UnityEditor;
 using UnityEngine;
 
 namespace RedTide
