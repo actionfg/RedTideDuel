@@ -92,7 +92,6 @@ public class SpawnList : ScriptableObject {
     
     public static GameObject DoSpawn(MobConfig mobConfig, Vector3 targetLoc, Quaternion rot, bool hardMode = false, int playerId = -1)
     {
-        
         GameObject mob = mobConfig.Create();
         mob.transform.position = targetLoc;
         mob.transform.rotation = rot;

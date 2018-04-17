@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.Networking.Types;
 using UnityEngine.UI;
 
 namespace GameDuel
@@ -23,6 +24,7 @@ namespace GameDuel
         protected Text _scoreText;
 
 
+        private int _playerId;
         //hard to control WHEN Init is called (networking make order between object spawning non deterministic)
         //so we call init from multiple location (depending on what between spaceship & manager is created first).
         protected bool _wasInit = false;
@@ -30,8 +32,10 @@ namespace GameDuel
 
         void Awake()
         {
+            _playerId = NetworkGameManager.sPlayers.Count;
             //register the spaceship in the gamemanager, that will allow to loop on it.
             NetworkGameManager.sPlayers.Add(this);
+            Debug.Log("Register player: " + _playerId + " identity: " + GetComponent<NetworkIdentity>().netId);
         }
 
         void Start()
@@ -65,19 +69,27 @@ namespace GameDuel
             NetworkGameManager.sPlayers.Remove(this);
         }
 
+        public override void OnStartClient()
+        {
+            base.OnStartClient();
+            Debug.Log(_playerId + " OnStart client");
+            
+        }
+
         [ClientCallback]
         void Update()
         {
             if (!isLocalPlayer)
                 return;
 
-            if(Input.GetButton("Jump") )
+            if(Input.GetButtonUp("Jump") )
             {
                 // TODO 此处可释放当前卡牌技能等 
                 //we call a Command, that will be executed only on server, to spawn a new bullet
 //                CmdFire(transform.position, transform.forward, _rigidbody.velocity);
+                Debug.Log("netId: " + netId);
+                DoSpawn();
             }
-
         }
 
 
@@ -88,6 +100,15 @@ namespace GameDuel
                 return;
             
         }
+        
+        private void DoSpawn()
+        {
+            // 改由NetworkGameManager生成
+            var pos = transform.position + new Vector3(Random.value * 5f, 0, 0);
+            NetworkGameManager.sInstance.Spawn(0, pos, _playerId);
+
+        }
+
 
         ///===== callback from sync var
         // --- Score & Life management & display

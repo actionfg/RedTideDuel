@@ -157,7 +157,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 27023625}
-  - component: {fileID: 27023626}
   m_Layer: 0
   m_Name: UpperGroup
   m_TagString: Untagged
@@ -178,22 +177,6 @@ Transform:
   m_Father: {fileID: 813391968}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &27023626
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 27023624}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b37eed669d3417abc7d58a8ae7ba2cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Interval: 1000
-  PlayerId: 0
-  BaseConfig: {fileID: 11400000, guid: 912d377a64cefd5429bfd6b56a017d6a, type: 2}
-  mob1: {fileID: 11400000, guid: 3192ea3399bec614e957b0729ae4a79d, type: 2}
-  Count: 1
 --- !u!1 &32064260
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,7 +321,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -49.99994}
+  m_AnchoredPosition: {x: 50, y: -50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &143270338
@@ -700,7 +683,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiScoreZone: {fileID: 766346049}
   uiScoreFont: {fileID: 12800000, guid: 87c316b602156405d92e616621658222, type: 3}
-  mobPrefabs: []
+  MobConfigs:
+  - {fileID: 11400000, guid: 014bb7319c1e61a49bfc743fac52bf1f, type: 2}
+  mobPrefabs:
+  - {fileID: 1359698387740226, guid: 73e9aa6615b2d74448c3ddf85372a498, type: 2}
 --- !u!114 &813391970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -901,7 +887,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1572258607}
-  - component: {fileID: 1572258608}
   m_Layer: 0
   m_Name: BelowGroup
   m_TagString: Untagged
@@ -922,22 +907,6 @@ Transform:
   m_Father: {fileID: 813391968}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
---- !u!114 &1572258608
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1572258606}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b37eed669d3417abc7d58a8ae7ba2cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Interval: 1000
-  PlayerId: 1
-  BaseConfig: {fileID: 11400000, guid: 912d377a64cefd5429bfd6b56a017d6a, type: 2}
-  mob1: {fileID: 11400000, guid: 3192ea3399bec614e957b0729ae4a79d, type: 2}
-  Count: 1
 --- !u!1 &1727990255
 GameObject:
   m_ObjectHideFlags: 0
