@@ -18,7 +18,6 @@ namespace GameDuel
         [Header("Gameplay")]
         //Those are sorte dby level 0 == lowest etc...
         public MobConfig[] MobConfigs;
-        public GameObject[] mobPrefabs;
 
         [Space]
 
@@ -59,16 +58,6 @@ namespace GameDuel
             if(allDestroyed)
             {
                 StartCoroutine(ReturnToLoby());
-            }
-        }
-
-        public override void OnStartClient()
-        {
-            base.OnStartClient();
-
-            foreach (GameObject obj in mobPrefabs)
-            {
-                ClientScene.RegisterPrefab(obj);
             }
         }
 
@@ -116,16 +105,6 @@ namespace GameDuel
 //                NetworkServer.Spawn(ast);
 //            }
 //        }
-
-        public void Spawn(int mobIndex, Vector3 pos, int playerId)
-        {
-            if (isServer)
-            {
-                var mob = SpawnList.DoSpawn(MobConfigs[mobIndex], pos, playerId);
-                NetworkServer.Spawn(mob);
-                Debug.Log("Spawn " + mob.name + " on server!!");
-            }
-
-        }
+        
     }
 }

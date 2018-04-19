@@ -2,6 +2,7 @@
 using UnityEngine.Networking;
 using UnityEngine.Networking.Types;
 using UnityEngine.UI;
+using _scripts.unit;
 
 namespace GameDuel
 {
@@ -21,10 +22,11 @@ namespace GameDuel
         [SyncVar(hook = "OnReadyForBattle")]
         public bool ReadyForBattle = false;
 
+        public GameObject[] mobPrefabs;
+
         protected Text _scoreText;
 
 
-        private int _playerId;
         //hard to control WHEN Init is called (networking make order between object spawning non deterministic)
         //so we call init from multiple location (depending on what between spaceship & manager is created first).
         protected bool _wasInit = false;
@@ -32,10 +34,8 @@ namespace GameDuel
 
         void Awake()
         {
-            _playerId = NetworkGameManager.sPlayers.Count;
             //register the spaceship in the gamemanager, that will allow to loop on it.
             NetworkGameManager.sPlayers.Add(this);
-            Debug.Log("Register player: " + _playerId + " identity: " + GetComponent<NetworkIdentity>().netId);
         }
 
         void Start()
@@ -43,6 +43,7 @@ namespace GameDuel
             if (NetworkGameManager.sInstance != null)
             {//we MAY be awake late (see comment on _wasInit above), so if the instance is already there we init
                 Init();
+                Debug.Log("Register player: " + netId);
             }
         }
 
@@ -69,13 +70,6 @@ namespace GameDuel
             NetworkGameManager.sPlayers.Remove(this);
         }
 
-        public override void OnStartClient()
-        {
-            base.OnStartClient();
-            Debug.Log(_playerId + " OnStart client");
-            
-        }
-
         [ClientCallback]
         void Update()
         {
@@ -87,8 +81,7 @@ namespace GameDuel
                 // TODO 此处可释放当前卡牌技能等 
                 //we call a Command, that will be executed only on server, to spawn a new bullet
 //                CmdFire(transform.position, transform.forward, _rigidbody.velocity);
-                Debug.Log("netId: " + netId);
-                DoSpawn();
+                CmdSpawn();
             }
         }
 
@@ -101,11 +94,38 @@ namespace GameDuel
             
         }
         
-        private void DoSpawn()
+        public override void OnStartClient()
+        {
+            base.OnStartClient();
+
+            foreach (GameObject obj in mobPrefabs)
+            {
+                ClientScene.RegisterPrefab(obj);
+            }
+        }
+
+
+        [Command]
+        private void CmdSpawn()
         {
             // 改由NetworkGameManager生成
-            var pos = transform.position + new Vector3(Random.value * 5f, 0, 0);
-            NetworkGameManager.sInstance.Spawn(0, pos, _playerId);
+            if (isServer)
+            {
+                var pos = transform.position + new Vector3(Random.value * 5f, 0, 0);
+                var mob = SpawnList.DoSpawn(NetworkGameManager.sInstance.MobConfigs[0], pos, (int) netId.Value);
+                // 远端client没有MobUnit组件, 因RegisterPrefab时并无此组件
+                // 解决方案: 加入NetUnit, 用于在OnDeserialize时,创建相应组件, 同时更新一些简单数据, 如Hp值
+                var netUnit = mob.GetComponent<NetUnit>();
+                if (netUnit)
+                {
+                    netUnit.ConfigIndex = 0;
+                    netUnit.PlayerId = (int) netId.Value;
+                }
+                // TODO MobControl可能需改成NetworkBehavior, 不然无法同步技能
+                
+                NetworkServer.Spawn(mob);
+            }
+
 
         }
 
@@ -222,7 +242,7 @@ namespace GameDuel
         public void CmdChangeBattleReady()
         {
             ReadyForBattle = !ReadyForBattle;
-            Debug.Log(playerName + " change battleReady: " + ReadyForBattle);
+            Debug.Log(netId + " change battleReady: " + ReadyForBattle);
         }
     }
 }

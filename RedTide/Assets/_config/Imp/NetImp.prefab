@@ -347,6 +347,7 @@ GameObject:
   - component: {fileID: 114276392585226698}
   - component: {fileID: 114165496953350952}
   - component: {fileID: 114696417218084512}
+  - component: {fileID: 114942472768329786}
   m_Layer: 8
   m_Name: NetImp
   m_TagString: Untagged
@@ -1909,22 +1910,22 @@ MonoBehaviour:
   m_SceneId:
     m_Value: 0
   m_AssetId:
-    i0: 0
-    i1: 0
-    i2: 0
-    i3: 0
-    i4: 0
-    i5: 0
-    i6: 0
-    i7: 0
-    i8: 0
-    i9: 0
-    i10: 0
-    i11: 0
-    i12: 0
-    i13: 0
-    i14: 0
-    i15: 0
+    i0: 115
+    i1: 233
+    i2: 170
+    i3: 102
+    i4: 21
+    i5: 178
+    i6: 215
+    i7: 68
+    i8: 72
+    i9: 195
+    i10: 221
+    i11: 248
+    i12: 83
+    i13: 114
+    i14: 164
+    i15: 152
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
 --- !u!114 &114228691039424582
@@ -2075,6 +2076,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FleeDistance: 6
+--- !u!114 &114942472768329786
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1359698387740226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 067ff54089554cc5a0a53b184b197eec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ConfigIndex: 0
+  PlayerId: 0
+  CurrentHp: 0
 --- !u!137 &137546978037763622
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

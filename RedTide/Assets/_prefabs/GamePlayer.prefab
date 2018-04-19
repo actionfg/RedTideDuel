@@ -89,6 +89,7 @@ MonoBehaviour:
   playerName: 
   lifeCount: 0
   ReadyForBattle: 0
-  MobPrefabs: []
   MobConfigs:
   - {fileID: 11400000, guid: 014bb7319c1e61a49bfc743fac52bf1f, type: 2}
+  mobPrefabs:
+  - {fileID: 1359698387740226, guid: 73e9aa6615b2d74448c3ddf85372a498, type: 2}

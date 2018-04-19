@@ -11,7 +11,7 @@
  */
 public class UnitManager : MonoBehaviour
 {
-    public static readonly float ACTIVE_RANGE = 30f;
+    public static readonly float ACTIVE_RANGE = 20f;
     public static readonly float Boss_ACTIVE_RANGE = 200f;
     public static UnitManager Instance;
 
@@ -134,7 +134,7 @@ public class UnitManager : MonoBehaviour
 //	        CameraController controller = camera.GetComponent<CameraController>();
 //            controller.Initialize(currentPlayer.transform);
 //
-//	        // TODO: Pet ID
+//	       
 ////	        PetConfig petConfig = CharacterConfigManager.GetPet(0);
 ////	        GameObject pet = petConfig.Create();
 ////	        pet.transform.position = currentPlayer.transform.position + Vector3.back * 2f;
